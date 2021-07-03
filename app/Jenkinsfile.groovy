@@ -10,7 +10,6 @@ node {
         sh("git checkout $gitBranch")
         sh("git clean -fd")
         sh("./gradlew :app:generateStableTest")
-        echo("Git URL is $GIT_URL")
         sh("git config --global user.email \"jenkins@email.com\"")
         sh("git config --global user.name \"Jenkins\"")
         sh("git add app")
