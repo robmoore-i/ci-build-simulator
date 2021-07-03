@@ -1,23 +1,25 @@
 node {
-    environment {
-        GITHUB_CREDENTIALS = credentials('GitHubPushAccess')
+    stage("Checkout") {
+        sh("git --version")
+        checkout scm
+        sh("ls")
     }
     stage("Run tests") {
         sh("./gradlew :app:test")
     }
     stage("Extend test suite") {
-        def BRANCH = "$GIT_BRANCH".drop("origin/".length())
-        sh("git checkout $BRANCH")
+        def gitBranch = "main"
+        sh("git checkout $gitBranch")
         sh("git clean -fd")
         sh("./gradlew :app:generateStableTest")
         echo("Git URL is $GIT_URL")
-        echo("Credentials: $GITHUB_CREDENTIALS")
         sh("git config --global user.email \"jenkins@email.com\"")
         sh("git config --global user.name \"Jenkins\"")
-        sh("git config --global github.user $GITHUB_CREDENTIALS_USR")
-        sh("git config --global github.token $GITHUB_CREDENTIALS_PSW")
         sh("git add app")
         sh("git commit -am \"Extended test suite\"")
-        sh("git push")
+        withCredentials([usernameColonPassword(credentialsId: 'GitHubPushAccess', variable: 'GITHUB_CREDENTIALS')]) {
+            def truncatedGitUrl = "$GIT_URL".drop("https://".length())
+            sh("git push https://${GITHUB_CREDENTIALS}@$truncatedGitUrl")
+        }
     }
 }
