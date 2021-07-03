@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         GITHUB_CREDENTIALS = credentials('GitHubPushAccess')
+        BRANCH = "$GIT_BRANCH".drop("origin/".length())
     }
     stages {
         stage("Run tests") {
@@ -10,9 +11,8 @@ pipeline {
             }
         }
         stage("Extend test suite") {
-            def branch = "$GIT_BRANCH".drop("origin/".length())
             steps {
-                sh("git checkout $branch")
+                sh("git checkout $BRANCH")
                 sh("git clean -fd")
                 sh("./gradlew :app:generateStableTest")
                 echo("Git URL is $GIT_URL")
