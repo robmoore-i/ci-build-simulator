@@ -10,8 +10,8 @@ pipeline {
             }
         }
         stage("Extend test suite") {
+            def branch = "$GIT_BRANCH".drop("origin/".length())
             steps {
-                def branch = "$GIT_BRANCH".drop("origin/".length())
                 sh("git checkout $branch")
                 sh("git clean -fd")
                 sh("./gradlew :app:generateStableTest")
