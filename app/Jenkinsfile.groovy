@@ -11,6 +11,7 @@ pipeline {
         }
         stage("Extend test suite") {
             steps {
+                sh("git clean -fd")
                 sh("./gradlew :app:generateStableTest")
                 echo("Git URL is $GIT_URL")
                 echo("Credentials: $GITHUB_CREDENTIALS")
@@ -18,7 +19,8 @@ pipeline {
                 sh("git config --global user.name \"Jenkins\"")
                 sh("git config --global github.user $GITHUB_CREDENTIALS_USR")
                 sh("git config --global github.token $GITHUB_CREDENTIALS_PSW")
-                sh("git commit -am'Extended test suite'")
+                sh("git add app")
+                sh("git commit -am \"Extended test suite\"")
             }
         }
     }
