@@ -12,10 +12,6 @@
                 <artifactNumToKeep>-1</artifactNumToKeep>
             </strategy>
         </jenkins.model.BuildDiscarderProperty>
-        <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-            </parameterDefinitions>
-        </hudson.model.ParametersDefinitionProperty>
     </properties>
     <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.83">
         <scm class="hudson.plugins.git.GitSCM" plugin="git@4.4.4">
