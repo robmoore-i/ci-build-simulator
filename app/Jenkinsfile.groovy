@@ -21,6 +21,7 @@ pipeline {
                 sh("git config --global github.token $GITHUB_CREDENTIALS_PSW")
                 sh("git add app")
                 sh("git commit -am \"Extended test suite\"")
+                sh("git push")
             }
         }
     }
