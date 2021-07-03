@@ -1,14 +1,12 @@
 node {
-    stage("Checkout") {
-        sh("git --version")
-        checkout scm
+    stage("Setup") {
         sh("ls")
     }
     stage("Run tests") {
         sh("./gradlew :app:test")
     }
     stage("Extend test suite") {
-        def gitBranch = "main"
+        String gitBranch = "main"
         sh("git checkout $gitBranch")
         sh("git clean -fd")
         sh("./gradlew :app:generateStableTest")
@@ -18,7 +16,8 @@ node {
         sh("git add app")
         sh("git commit -am \"Extended test suite\"")
         withCredentials([usernameColonPassword(credentialsId: 'GitHubPushAccess', variable: 'GITHUB_CREDENTIALS')]) {
-            def truncatedGitUrl = "$GIT_URL".drop("https://".length())
+            String gitUrl = sh(returnStdout: true, script: 'git config remote.origin.url').trim()
+            String truncatedGitUrl = gitUrl.drop("https://".length())
             sh("git push https://${GITHUB_CREDENTIALS}@$truncatedGitUrl")
         }
     }
