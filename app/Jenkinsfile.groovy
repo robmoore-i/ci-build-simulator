@@ -11,7 +11,7 @@ pipeline {
         }
         stage("Extend test suite") {
             steps {
-                sh("git checkout $GIT_BRANCH")
+                sh("git checkout $GIT_LOCAL_BRANCH")
                 sh("git clean -fd")
                 sh("./gradlew :app:generateStableTest")
                 echo("Git URL is $GIT_URL")
