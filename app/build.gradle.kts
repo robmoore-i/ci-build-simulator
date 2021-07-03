@@ -18,7 +18,7 @@ dependencies {
     constraints {
         implementation("org.apache.commons:commons-text:1.9")
         implementation("org.codehaus.groovy:groovy-all:3.0.7")
-        implementation("com.offbytwo.jenkins:jenkins-client:0.3.8")
+        implementation("com.offbytwo.jenkins:jenkins-client:0.3.8") // https://github.com/jenkinsci/java-client-api
         testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
     }
     implementation("org.codehaus.groovy:groovy-all")
