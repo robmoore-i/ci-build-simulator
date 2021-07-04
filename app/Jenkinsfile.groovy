@@ -1,7 +1,8 @@
 node {
     stage("Setup") {
         sh("ls")
-        String gitBranch = sh(returnStdout: true, script: "git branch --show-current").trim()
+        sh("git --version")
+        String gitBranch = "main"
         sh("git checkout $gitBranch")
         sh("git pull")
         sh("git reset --hard origin/$gitBranch")
