@@ -2,6 +2,8 @@ node {
     stage("Setup") {
         sh("ls")
         sh("git --version")
+        def scmRefspec = scm.getUserRemoteConfigs()[0].getRefspec()
+        echo("Refspec: $scmRefspec")
         String gitBranch = "main"
         sh("git checkout $gitBranch")
         sh("git reset --hard origin/$gitBranch")
