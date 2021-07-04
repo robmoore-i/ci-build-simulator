@@ -15,7 +15,7 @@ node {
         sh("git reset --hard origin/$gitBranch")
         sh("git pull")
         sh("git clean -fd")
-        sh("git config --global user.email \"robmoore121+Jenkins@gmail.com\"")
+        sh("git config --global user.email \"robmoore121+jenkins@gmail.com\"")
         sh("git config --global user.name \"Jenkins\"")
     }
     String projectName = "$JOB_NAME".split("_")[0]
