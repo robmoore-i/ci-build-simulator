@@ -2,8 +2,8 @@ node {
     stage("Setup") {
         sh("ls")
         sh("git --version")
-        def remoteConfig = scm.getUserRemoteConfigs()[0]
-        echo("RemoteConfig: $remoteConfig")
+        def remoteConfigs = scm.getUserRemoteConfigs()
+        echo("RemoteConfigs: $remoteConfigs")
         String gitBranch = "main"
         sh("git checkout $gitBranch")
         sh("git reset --hard origin/$gitBranch")
