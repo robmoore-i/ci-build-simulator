@@ -30,11 +30,16 @@ node {
         }
     }
     def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count HEAD").trim().toInteger()
-    stage("Simulate") {
-        if (numberOfCommits >= 60) {
-            echo("That's all folks")
-        } else {
+    def maxNumberOfCommitsInSimulation = 60
+    echo("Number of commits so far: $numberOfCommits. Will stop at $maxNumberOfCommitsInSimulation")
+    stage("Check simulation") {
+        if (numberOfCommits < maxNumberOfCommitsInSimulation) {
             build job: "$JOB_NAME", wait: false
+        }
+    }
+    if (numberOfCommits >= maxNumberOfCommitsInSimulation) {
+        stage("Finish simulation") {
+            echo("That's all folks")
         }
     }
 }
