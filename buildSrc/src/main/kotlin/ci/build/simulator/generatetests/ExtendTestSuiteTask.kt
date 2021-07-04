@@ -7,17 +7,17 @@ import java.io.File
 import java.nio.file.Paths
 import kotlin.random.Random
 
-open class ExtendTestSuiteTask : DefaultTask() {
+abstract class ExtendTestSuiteTask : DefaultTask() {
 
     @Input
     var testSourcesPath = "src/test/groovy"
 
-    @Input
-    var stablePackage = "ci.build.simulator.app.stable"
+    @get:Input
+    abstract var stableTestsPackage: String
 
     @TaskAction
     fun extendTestSuite() {
-        val dir = Paths.get("${project.projectDir}/$testSourcesPath/${stablePackage.replace('.', '/')}").toFile()
+        val dir = Paths.get("${project.projectDir}/$testSourcesPath/${stableTestsPackage.replace('.', '/')}").toFile()
         if (!dir.exists()) {
             throw RuntimeException("Can't find test sources dir. Tried '${dir.absolutePath}'.")
         }
@@ -27,7 +27,7 @@ open class ExtendTestSuiteTask : DefaultTask() {
         val newTest = File(dir, "StableTest$nextTestNumber.groovy")
         println("Generating file ${newTest.name}")
         newTest.writeText(
-            """package ci.build.simulator.app.stable
+            """package ci.build.simulator.${project.projectDir.name}.stable
 
 import org.junit.jupiter.api.Test
 

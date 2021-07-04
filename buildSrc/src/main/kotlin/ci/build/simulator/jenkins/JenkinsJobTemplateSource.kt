@@ -1,7 +1,8 @@
 package ci.build.simulator.jenkins
 
 object JenkinsJobTemplateSource {
-    val text = """
+    fun text(branch: String, projectName: String): String {
+        return """
 <?xml version='1.1' encoding='UTF-8'?>
 <flow-definition plugin="workflow-job@2.41">
   <actions>
@@ -13,7 +14,7 @@ object JenkinsJobTemplateSource {
       <options/>
     </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
   </actions>
-  <description>Build</description>
+  <description>Simulation</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.model.BuildDiscarderProperty>
@@ -35,18 +36,19 @@ object JenkinsJobTemplateSource {
       </userRemoteConfigs>
       <branches>
         <hudson.plugins.git.BranchSpec>
-          <name>{{BRANCH}}</name>
+          <name>$branch</name>
         </hudson.plugins.git.BranchSpec>
       </branches>
       <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
       <submoduleCfg class="list"/>
       <extensions/>
     </scm>
-    <scriptPath>app/Jenkinsfile.groovy</scriptPath>
+    <scriptPath>$projectName/Jenkinsfile.groovy</scriptPath>
     <lightweight>false</lightweight>
   </definition>
   <triggers/>
   <disabled>false</disabled>
 </flow-definition>
 """.trimIndent()
+    }
 }

@@ -1,4 +1,4 @@
-package ci.build.simulator.app
+package ci.build.simulator.sleeper
 
 import org.junit.jupiter.api.Test
 

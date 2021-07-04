@@ -9,6 +9,7 @@ class GenerateTestsPlugin : Plugin<Project> {
             group = "generateTests"
             description = "Extends the current test suite by generating more test classes."
             testSourcesPath = "src/test/groovy"
+            stableTestsPackage = "ci.build.simulator.${project.projectDir.name}.stable"
         }
     }
 }

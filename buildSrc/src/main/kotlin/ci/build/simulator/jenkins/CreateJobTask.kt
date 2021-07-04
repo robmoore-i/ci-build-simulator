@@ -13,7 +13,7 @@ open class CreateJobTask : DefaultTask() {
         if (jenkins.jobs.containsKey(inputs.jobName)) {
             throw RuntimeException("Job ${inputs.jobName} for branch '${inputs.branch}' already exists. Aborting.")
         }
-        val jobXml = JenkinsJobTemplateSource.text.replace("{{BRANCH}}", inputs.branch)
+        val jobXml = JenkinsJobTemplateSource.text(inputs.branch, project.projectDir.name)
         logger.quiet("Create Jenkins job named '${inputs.jobName}'")
         logger.info("New job XML:\n-----\n$jobXml\n-----")
         jenkins.createJob(inputs.jobName, jobXml, true)

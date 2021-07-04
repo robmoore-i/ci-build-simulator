@@ -17,7 +17,7 @@ data class CreateJobTaskInputs(val branch: String, val url: String, val user: St
             ) {
                 throw RuntimeException(
                     "Missing project properties. Example usage:\n" +
-                            "./gradlew :app:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret"
+                            "./gradlew :${project.projectDir.name}:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret"
                 )
             }
 

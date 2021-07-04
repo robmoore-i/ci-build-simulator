@@ -7,7 +7,7 @@ plugins {
 }
 
 application {
-    mainClass.set("ci.build.simulator.app.App")
+    mainClass.set("ci.build.simulator.sleeper.App")
 }
 
 repositories {

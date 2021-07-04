@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "ci-build-simulator"
-include("app")
+include("sleeper")

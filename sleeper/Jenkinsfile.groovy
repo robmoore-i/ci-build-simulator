@@ -17,11 +17,11 @@ node {
         sh("git config --global user.name \"Jenkins\"")
     }
     stage("Run tests") {
-        sh("./gradlew :app:test")
+        sh("./gradlew :sleeper:test")
     }
     stage("Extend test suite") {
-        sh("./gradlew :app:extendTestSuite")
-        sh("git add app")
+        sh("./gradlew :sleeper:extendTestSuite")
+        sh("git add .")
         sh("git commit -am \"(Jenkins) Extended test suite\"")
         String gitUrl = sh(returnStdout: true, script: "git config remote.origin.url").trim()
         String truncatedGitUrl = gitUrl.drop("https://".length())

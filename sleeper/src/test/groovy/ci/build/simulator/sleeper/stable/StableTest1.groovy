@@ -1,4 +1,4 @@
-package ci.build.simulator.app.stable
+package ci.build.simulator.sleeper.stable
 
 import org.junit.jupiter.api.Test
 
