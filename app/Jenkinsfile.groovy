@@ -8,7 +8,6 @@ node {
         sh("ls")
         sh("git --version")
         sh("git branch")
-        echo("$BRANCH_NAME")
         String gitBranch = "$JOB_NAME".replace('-', '/')
         sh("git checkout $gitBranch")
         sh("git reset --hard origin/$gitBranch")
