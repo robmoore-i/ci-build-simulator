@@ -1,13 +1,14 @@
 node {
     stage("Setup") {
         sh("ls")
+        String gitBranch = "main"
+        sh("git checkout $gitBranch")
+        sh("git pull")
     }
     stage("Run tests") {
         sh("./gradlew :app:test")
     }
     stage("Extend test suite") {
-        String gitBranch = "main"
-        sh("git checkout $gitBranch")
         sh("git clean -fd")
         sh("./gradlew :app:generateStableTest")
         sh("git config --global user.email \"jenkins@email.com\"")
