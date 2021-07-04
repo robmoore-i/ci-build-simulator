@@ -29,7 +29,15 @@ node {
             sh("git push https://${GITHUB_CREDENTIALS}@$truncatedGitUrl")
         }
     }
-    stage("Trigger next job") {
-        build job: "$JOB_NAME", wait: false
+    def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count HEAD").trim().toInteger()
+    if (numberOfCommits >= 60) {
+        stage("Finish simulation") {
+            echo("That's all folks")
+        }
+    } else {
+        stage("Trigger next job") {
+            build job: "$JOB_NAME", wait: false
+        }
     }
+
 }
