@@ -1,9 +1,14 @@
 # ci-build-simulator
 
-This repository contains
-a [multi-project Gradle build](https://docs.gradle.org/current/userguide/multi_project_builds.html#sec:creating_multi_project_builds)
+This repository contains a 
+[multi-project Gradle build](https://docs.gradle.org/current/userguide/multi_project_builds.html#sec:creating_multi_project_builds)
 which can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2) with executed jobs and
 their corresponding data.
+
+## CodeDay Labs
+
+This project exists mainly for use by my CodeDay labs team to generate test data while they create a tool for
+[Developer Productivity](#developer-productivity) that could be used to view some basic analytics about builds.
 
 ## Usage
 
@@ -106,11 +111,6 @@ SpringBoot API. I would suggest taking the following steps:
   `SpringBootDevelopmentSimulator` for generating code. Presumably this implementation generates some code that is
   specific to SpringBoot.
 - You should then be able to create your custom simulations on Jenkins.
-
-## CodeDay Labs
-
-This project exists mainly for use by my CodeDay labs team to generate test data while they create a tool for
-[Developer Productivity](#developer-productivity) that could be used to view some basic analytics about builds.
 
 ## Developer Productivity
 
