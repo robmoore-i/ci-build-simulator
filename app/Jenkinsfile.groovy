@@ -9,7 +9,7 @@ node {
         sh("git pull")
         sh("git clean -fd")
         sh("git config --global user.email \"robmoore121+Jenkins@gmail.com\"")
-        sh("git config --global user.name \"Jenkins Moore\"")
+        sh("git config --global user.name \"Jenkins\"")
     }
     stage("Run tests") {
         sh("./gradlew :app:test")

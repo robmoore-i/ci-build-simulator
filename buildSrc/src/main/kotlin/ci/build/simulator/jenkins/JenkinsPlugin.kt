@@ -5,10 +5,9 @@ import org.gradle.api.Project
 
 class JenkinsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.tasks.register("createJob") {
+        target.tasks.register("createJob", CreateJobTask::class.java) {
             group = "jenkins"
             description = "Creates a Jenkins job for the given branch of this repo"
-            logger.quiet("Creating Jenkins job")
         }
     }
 }
