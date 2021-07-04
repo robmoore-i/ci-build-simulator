@@ -1,3 +1,5 @@
+import ci.build.simulator.simulate.development.GenerateSleeperTest
+
 plugins {
     idea
     groovy
@@ -22,6 +24,10 @@ dependencies {
     }
     implementation("org.codehaus.groovy:groovy-all")
     testImplementation("org.junit.jupiter:junit-jupiter")
+}
+
+simulator {
+    instance.set(GenerateSleeperTest(logger))
 }
 
 tasks.test {
