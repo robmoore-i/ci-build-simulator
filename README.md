@@ -7,8 +7,9 @@ their corresponding data.
 
 ## CodeDay Labs
 
-This project exists mainly for use by my CodeDay labs team to generate test data while they create a tool for
-[Developer Productivity](#developer-productivity) that could be used to view some basic analytics about builds.
+This project exists mainly for use by my [CodeDay labs](https://labs.codeday.org) team to generate test data while they 
+create a tool for [Developer Productivity](#developer-productivity) that could be used to view some basic analytics 
+about builds.
 
 ## Usage
 
