@@ -2,7 +2,7 @@ plugins {
     idea
     groovy
     application
-    id("ci.build.simulator.generateTests")
+    id("ci.build.simulator.simulate.development")
     id("ci.build.simulator.jenkins")
 }
 

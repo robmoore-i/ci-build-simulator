@@ -23,8 +23,8 @@ node {
     stage("Run tests") {
         sh("./gradlew :$projectName:test")
     }
-    stage("Extend test suite") {
-        sh("./gradlew :$projectName:extendTestSuite")
+    stage("Simulate development") {
+        sh("./gradlew :$projectName:simulateDevelopment")
         sh("git add .")
         sh("git commit -am \"(Jenkins) Extended test suite\"")
         String gitUrl = sh(returnStdout: true, script: "git config remote.origin.url").trim()

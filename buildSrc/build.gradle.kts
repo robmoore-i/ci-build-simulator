@@ -19,8 +19,8 @@ dependencies {
 gradlePlugin {
     plugins {
         create("testGenerator") {
-            id = "ci.build.simulator.generateTests"
-            implementationClass = "ci.build.simulator.generatetests.GenerateTestsPlugin"
+            id = "ci.build.simulator.simulate.development"
+            implementationClass = "ci.build.simulator.simulate.development.SimulateDevelopmentPlugin"
         }
 
         create("jenkins") {

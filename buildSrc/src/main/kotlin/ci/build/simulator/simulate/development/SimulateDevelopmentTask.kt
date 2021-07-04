@@ -1,4 +1,4 @@
-package ci.build.simulator.generatetests
+package ci.build.simulator.simulate.development
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
@@ -7,7 +7,7 @@ import java.io.File
 import java.nio.file.Paths
 import kotlin.random.Random
 
-abstract class ExtendTestSuiteTask : DefaultTask() {
+abstract class SimulateDevelopmentTask : DefaultTask() {
 
     @Input
     var testSourcesPath = "src/test/groovy"
@@ -16,7 +16,7 @@ abstract class ExtendTestSuiteTask : DefaultTask() {
     abstract var stableTestsPackage: String
 
     @TaskAction
-    fun extendTestSuite() {
+    fun develop() {
         val dir = Paths.get("${project.projectDir}/$testSourcesPath/${stableTestsPackage.replace('.', '/')}").toFile()
         if (!dir.exists()) {
             throw RuntimeException("Can't find test sources dir. Tried '${dir.absolutePath}'.")
