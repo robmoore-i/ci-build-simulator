@@ -1,4 +1,4 @@
-package ci.build.simulator
+package ci.build.simulator.generatetests
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project

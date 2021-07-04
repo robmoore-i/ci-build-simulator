@@ -1,4 +1,4 @@
-package ci.build.simulator
+package ci.build.simulator.generatetests
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
