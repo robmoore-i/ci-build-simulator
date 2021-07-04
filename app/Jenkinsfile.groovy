@@ -1,5 +1,6 @@
 node {
     stage("Setup") {
+        sh("pwd")
         sh("ls")
         sh("git --version")
         String gitBranch = sh(returnStdout: true, script: "git branch | grep \"^*\" | awk '{print \$2}'").trim()
