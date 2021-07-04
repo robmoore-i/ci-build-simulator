@@ -1,4 +1,4 @@
-import ci.build.simulator.simulate.development.GenerateSleeperTest
+import ci.build.simulator.simulate.development.SleeperDevelopmentSimulator
 
 plugins {
     idea
@@ -27,7 +27,7 @@ dependencies {
 }
 
 simulator {
-    instance.set(GenerateSleeperTest(logger))
+    instance.set(SleeperDevelopmentSimulator(logger))
 }
 
 tasks.named<Test>("test") {

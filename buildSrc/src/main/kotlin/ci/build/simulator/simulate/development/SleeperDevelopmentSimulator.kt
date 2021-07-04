@@ -4,7 +4,7 @@ import org.gradle.api.logging.Logger
 import java.io.File
 import kotlin.random.Random
 
-class GenerateSleeperTest(private val logger: Logger) : DevelopmentSimulator {
+class SleeperDevelopmentSimulator(private val logger: Logger) : DevelopmentSimulator {
     override fun develop(basePackage: String, mainSourcesDir: File, testSourcesDir: File) {
         logger.quiet("Generating a test in ${testSourcesDir.absolutePath}")
         val currentTestSourceFiles = testSourcesDir.listFiles()?.filterNotNull() ?: emptyList()

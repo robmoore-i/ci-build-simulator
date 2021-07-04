@@ -67,6 +67,18 @@ test flakiness, and in other ways too. You may want to generate data for differe
 different kinds of artefacts like JARs, executables, containers or something else. To do this, you'll need to be able to
 extend this simulator to cover whatever custom requirements you might have.
 
+Let's say you wanted to create simulations for some new kind of build. Let's say you want to do a simulation for a
+SpringBoot API. I would suggest taking the following steps:
+
+- Create a new Gradle subproject, like `springboot`
+- Write code in the `springboot` subproject so that the API works, has basic tests and meets the assumptions of the
+  above mentioned Gradle plugins.
+- Create a custom implementation of `DevelopmentSimulator` in `buildSrc/src/main/kotlin` under the
+  `ci.build.simulator.simulate.development` package, called `SpringBootDevelopmentSimulator` and implement it however
+  you like.
+
+At this point, you should be able to create your custom simulations on Jenkins.
+
 ## CodeDay Labs
 
 This project exists mainly for use by my CodeDay labs team while they create a tool for
