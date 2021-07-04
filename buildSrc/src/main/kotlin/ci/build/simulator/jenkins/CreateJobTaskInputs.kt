@@ -5,6 +5,9 @@ import org.gradle.api.Project
 import java.net.URI
 
 data class CreateJobTaskInputs(val branch: String, val url: String, val user: String, val password: String) {
+
+    val jobName = branch.replace('/', '-')
+
     companion object {
         fun usingPropertiesFromProject(project: Project): CreateJobTaskInputs {
             if (!(project.hasProperty("branch") &&

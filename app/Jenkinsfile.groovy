@@ -1,5 +1,9 @@
 node {
     stage("Setup") {
+        boolean alreadyCheckedOut = sh(returnStatus: true, script: "ls .git") == 0
+        if (!alreadyCheckedOut) {
+            checkout scm
+        }
         sh("pwd")
         sh("ls")
         sh("git --version")

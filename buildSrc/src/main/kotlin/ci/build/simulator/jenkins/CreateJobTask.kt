@@ -10,13 +10,12 @@ open class CreateJobTask : DefaultTask() {
         logger.quiet("Creating Jenkins job simulation for branch '${inputs.branch}'")
         val jenkins = inputs.getJenkinsServer()
         logger.quiet("Current jobs: ${jenkins.jobs}")
-        val jobName = "Build-${inputs.branch}"
-        if (jenkins.jobs.containsKey(jobName)) {
-            throw RuntimeException("Job for branch '${inputs.branch}' already exists. Aborting.")
+        if (jenkins.jobs.containsKey(inputs.jobName)) {
+            throw RuntimeException("Job ${inputs.jobName} for branch '${inputs.branch}' already exists. Aborting.")
         }
         val jobXml = JenkinsJobTemplateSource.text.replace("{{BRANCH}}", inputs.branch)
-        logger.quiet("Create Jenkins job named '$jobName'")
+        logger.quiet("Create Jenkins job named '${inputs.jobName}'")
         logger.info("New job XML:\n-----\n$jobXml\n-----")
-        jenkins.createJob(jobName, jobXml, true)
+        jenkins.createJob(inputs.jobName, jobXml, true)
     }
 }
