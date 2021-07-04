@@ -2,7 +2,7 @@ node {
     stage("Setup") {
         sh("ls")
         sh("git --version")
-        def tryBranch = sh("git branch | grep *").trim()
+        def tryBranch = sh("git branch | grep \"*\" | awk '{print \$2}'").trim()
         echo("Branch: $tryBranch")
         String gitBranch = "main"
         sh("git checkout $gitBranch")
