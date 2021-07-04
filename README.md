@@ -1,15 +1,13 @@
 # ci-build-simulator
 
-This project can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2)
-with builds. 
+This project can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2) with builds.
 
 ## Usage
 
 ### Creating a simulation
 
-A simulation is a self-perpetuating job which continuously creates builds. It would be pretty
-boring if the builds were all the same, so in every run, the build modifies the source code so
-that subsequent builds are a bit different.
+A simulation is a self-perpetuating job which continuously creates builds. It would be pretty boring if the builds were
+all the same, so in every run, the build modifies the source code so that subsequent builds are a bit different.
 
 Correspondingly, there are two Gradle plugins:
 
@@ -20,54 +18,63 @@ Correspondingly, there are two Gradle plugins:
 
 Creates a Jenkins job for a simulation.
 
-For example, running `./gradlew :sleeper:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret` 
-will use the provided user/password credentials to log into the Jenkins installation at the provided URL, and create a 
+For example,
+running `./gradlew :sleeper:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret`
+will use the provided user/password credentials to log into the Jenkins installation at the provided URL, and create a
 new simulation which will continuously push updates to the provided branch.
 
 #### Assumptions made by the plugin
 
 - The given branch starts with `simulator/` and contains no underscores (`_`).
-- The indicated Jenkins installation needs to have some appropriate plugins in order to run the
-  jobs correctly. Honestly I don't know what the minimal subset is, but it certainly is a subset
-  of those seen [here](https://github.com/robmoore-i/JenkinsEC2/blob/main/jenkins_install_plugins.sh#L17).
-- The created jobs are named after the given project (i.e. `sleeper` in `:sleeper:createJob`) and
-  the given branch. If a job already exists for that combination, the job creation will fail with
-  a descriptive error message.
+- The indicated Jenkins installation needs to have some appropriate plugins in order to run the jobs correctly. Honestly
+  I don't know what the minimal subset is, but it certainly is a subset of those
+  seen [here](https://github.com/robmoore-i/JenkinsEC2/blob/main/jenkins_install_plugins.sh#L17).
+- The created jobs are named after the given project (i.e. `sleeper` in `:sleeper:createJob`) and the given branch. If a
+  job already exists for that combination, the job creation will fail with a descriptive error message.
 
 ### Gradle plugin: Simulate Development
 
 Modifies source code for introducing some variety in the build.
 
-For example, running `./gradlew :sleeper:simulateDevelopment` will run the development simulation in the `sleeper` 
+For example, running `./gradlew :sleeper:simulateDevelopment` will run the development simulation in the `sleeper`
 project, which should generate some code.
+
+To configure this plugin, a project which applies it needs to supply an instance of `DevelopmentSimulator`, which is a
+functional interface for generating source and test code files. If no instance is supplied, the configured
+`simulateDevelopment` task will do nothing.
+
+To pass in a custom implementation of `DevelopmentSimulator`, use the following code in the project's `build.gradle.kts`
+
+```
+simulator {
+    instance.set( <Instance of your custom implementation here> )
+}
+```
 
 #### Assumptions made by the plugin
 
 - Main and test sources are both written in Groovy, under the default groovy source set
   (i.e. `src/main/groovy` and `src/test/groovy`)
-- There is a base package `ci.build.simulator.<project-name>` for both the main and test 
-  sources, which is where the plugin will generate code. For example, 
-  `ci.build.simulator.sleeper`. The `<project name>` is the name of the subdirectory of this 
-  repo (i.e. the value within the 'include' call in `settings.gradle.kts`).
+- There is a base package `ci.build.simulator.<project-name>` for both the main and test sources, which is where the
+  plugin will generate code. For example,
+  `ci.build.simulator.sleeper`. The `<project name>` is the name of the subdirectory of this repo (i.e. the value within
+  the 'include' call in `settings.gradle.kts`).
 
 ## Extending this simulator
 
-There are different kinds of projects, whose builds have different kinds of characteristics
-in terms of test duration, test flakiness, and in other ways too. You may want to generate data
-for different phases of the build, like creating different kinds of artefacts like JARs, 
-executables, containers or something else. To do this, you'll need to be able to extend this 
-simulator to cover whatever custom requirements you might have.
+There are different kinds of projects, whose builds have different kinds of characteristics in terms of test duration,
+test flakiness, and in other ways too. You may want to generate data for different phases of the build, like creating
+different kinds of artefacts like JARs, executables, containers or something else. To do this, you'll need to be able to
+extend this simulator to cover whatever custom requirements you might have.
 
 ## CodeDay Labs
 
-This project exists mainly for use by my CodeDay labs team while they create a tool for 
-[Developer Productivity](#developer-productivity) that could be used to view some basic 
-analytics about builds.
+This project exists mainly for use by my CodeDay labs team while they create a tool for
+[Developer Productivity](#developer-productivity) that could be used to view some basic analytics about builds.
 
 ## Developer Productivity
 
-Many excellent software organisations employ teams dedicated to developer productivity. Here
-are a few examples:
+Many excellent software organisations employ teams dedicated to developer productivity. Here are a few examples:
 
 - [Gradle](https://gradle.com/blog/top-three-reasons-to-launch-a-dedicated-developer-productivity-engineering-team/)
 - [Netflix](https://jobs.netflix.com/jobs/59145792)
