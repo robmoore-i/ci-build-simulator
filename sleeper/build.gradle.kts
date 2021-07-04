@@ -30,7 +30,7 @@ simulator {
     instance.set(GenerateSleeperTest(logger))
 }
 
-tasks.test {
+tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 

@@ -38,8 +38,8 @@ new simulation which will continuously push updates to the provided branch.
 
 Modifies source code for introducing some variety in the build.
 
-For example, running `./gradlew :sleeper:simulateDevelopment` will generate some code in the
-`sleeper` project.
+For example, running `./gradlew :sleeper:simulateDevelopment` will run the development simulation in the `sleeper` 
+project, which should generate some code.
 
 #### Assumptions made by the plugin
 
@@ -49,8 +49,6 @@ For example, running `./gradlew :sleeper:simulateDevelopment` will generate some
   sources, which is where the plugin will generate code. For example, 
   `ci.build.simulator.sleeper`. The `<project name>` is the name of the subdirectory of this 
   repo (i.e. the value within the 'include' call in `settings.gradle.kts`).
-- Junit 5 needs to be on the test classpath 
-  (i.e. `testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")`)
 
 ## Extending this simulator
 

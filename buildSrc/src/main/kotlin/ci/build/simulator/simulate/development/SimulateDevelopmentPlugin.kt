@@ -13,7 +13,7 @@ class SimulateDevelopmentPlugin : Plugin<Project> {
             group = "simulate development"
             description = "Modifies the source code to simulate development."
             basePackage = "ci.build.simulator.${project.projectDir.name}"
-            simulator = extension.instance.get()
+            simulator = extension.instance.getOrElse(DevelopmentSimulator.NoopSimulator(logger))
         }
     }
 }
