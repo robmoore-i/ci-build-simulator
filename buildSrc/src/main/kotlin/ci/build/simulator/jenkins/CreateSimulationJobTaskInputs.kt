@@ -4,7 +4,7 @@ import com.offbytwo.jenkins.JenkinsServer
 import org.gradle.api.Project
 import java.net.URI
 
-data class CreateJobTaskInputs(
+data class CreateSimulationJobTaskInputs(
     val jobName: String,
     val branch: String,
     val url: String,
@@ -12,7 +12,7 @@ data class CreateJobTaskInputs(
     val password: String
 ) {
     companion object {
-        fun usingPropertiesFromProject(project: Project): CreateJobTaskInputs {
+        fun usingPropertiesFromProject(project: Project): CreateSimulationJobTaskInputs {
             if (!(project.hasProperty("branch") &&
                         project.hasProperty("url") &&
                         project.hasProperty("user") &&
@@ -20,7 +20,11 @@ data class CreateJobTaskInputs(
             ) {
                 throw RuntimeException(
                     "Missing project properties. Example usage:\n" +
-                            "./gradlew :${project.projectDir.name}:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret\n" +
+                            "./gradlew :${project.projectDir.name}:createSimulationJob " +
+                            "-Pbranch=simulation/1 " +
+                            "-Purl=http://13.229.56.106:8080 " +
+                            "-Puser=jenkins " +
+                            "-Ppassword=secret\n" +
                             "Given properties were: ${project.properties}"
                 )
             }
@@ -41,7 +45,7 @@ data class CreateJobTaskInputs(
             }
 
             val jobName = "${project.projectDir.name}_${branch.replace('/', '-')}"
-            return CreateJobTaskInputs(
+            return CreateSimulationJobTaskInputs(
                 jobName,
                 branch,
                 project.property("url") as String,

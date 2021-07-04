@@ -3,10 +3,10 @@ package ci.build.simulator.jenkins
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-open class CreateJobTask : DefaultTask() {
+open class CreateSimulationJobTask : DefaultTask() {
     @TaskAction
-    fun createJob() {
-        val inputs = CreateJobTaskInputs.usingPropertiesFromProject(project)
+    fun create() {
+        val inputs = CreateSimulationJobTaskInputs.usingPropertiesFromProject(project)
         logger.quiet("Creating Jenkins job simulation for branch '${inputs.branch}'")
         val jenkins = inputs.getJenkinsServer()
         logger.quiet("Current jobs: ${jenkins.jobs}")

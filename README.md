@@ -1,36 +1,46 @@
 # ci-build-simulator
 
-This project can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2) with builds.
+This repository contains a [multi-project Gradle build](https://docs.gradle.org/current/userguide/multi_project_builds.html#sec:creating_multi_project_builds) 
+which can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2) with executed jobs and 
+their corresponding data.
 
 ## Usage
 
 ### Creating a simulation
 
 A simulation is a self-perpetuating job which continuously creates builds. It would be pretty boring if the builds were
-all the same, so in every run, the build modifies the source code so that subsequent builds are a bit different.
+all the same, so in every run, the build modifies the source code on each run, so that subsequent builds are a bit 
+different, in a way that acts as a rudimentary simulation of developers making changes.
 
-Correspondingly, there are two Gradle plugins:
+Correspondingly, there are two Gradle plugins,
 
-- Jenkins (ci.build.simulator.jenkins)
-- Simulate Development (ci.build.simulator.simulate.development)
+- Jenkins
+  [ci.build.simulator.jenkins](buildSrc/src/main/kotlin/ci/build/simulator/jenkins)
+- Simulate Development
+  [ci.build.simulator.simulate.development](buildSrc/src/main/kotlin/ci/build/simulator/simulate/development)
 
 ### Gradle plugin: Jenkins
 
-Creates a Jenkins job for a simulation.
+Configures a Gradle task which creates a Jenkins job for a simulation.
 
-For example,
-running `./gradlew :sleeper:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret`
-will use the provided user/password credentials to log into the Jenkins installation at the provided URL, and create a
-new simulation which will continuously push updates to the provided branch.
+For example, running
+`./gradlew :sleeper:createSimulationJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret`
+will log into the Jenkins instance running at `http://13.229.56.106:8080` using the username `jenkins` and the password
+`secret`, and create a simulation job for the git branch `simulation/1`. Note that this means the branch `simulation/1`
+needs to be pushed to GitHub, otherwise Jenkins won't be able to see it.
+
+Simulations are Jenkins jobs with stages defined in the predefined, shared
+[Jenkinsfile](buildSrc/src/main/resources/Jenkinsfile.groovy). In short, these jobs run the build, run the development
+simulation Gradle task, and finish by triggering another build if needed.
 
 #### Assumptions made by the plugin
 
-- The given branch starts with `simulator/` and contains no underscores (`_`).
 - The indicated Jenkins installation needs to have some appropriate plugins in order to run the jobs correctly. Honestly
   I don't know what the minimal subset is, but it certainly is a subset of those
   seen [here](https://github.com/robmoore-i/JenkinsEC2/blob/main/jenkins_install_plugins.sh#L17).
-- The created jobs are named after the given project (i.e. `sleeper` in `:sleeper:createJob`) and the given branch. If a
-  job already exists for that combination, the job creation will fail with a descriptive error message.
+- The given branch starts with `simulator/` and contains no underscores (`_`).
+- The created jobs are named after the given project (i.e. `sleeper` in `:sleeper:createSimulationJob`), and the given
+  branch. If a job already exists for that combination, the job creation will fail with a descriptive error message.
 
 ### Gradle plugin: Simulate Development
 
