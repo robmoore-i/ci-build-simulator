@@ -17,5 +17,10 @@ gradlePlugin {
             id = "ci.build.simulator.generateTests"
             implementationClass = "ci.build.simulator.generatetests.GenerateTestsPlugin"
         }
+
+        create("jenkins") {
+            id = "ci.build.simulator.jenkins"
+            implementationClass = "ci.build.simulator.jenkins.JenkinsPlugin"
+        }
     }
 }

@@ -3,6 +3,7 @@ plugins {
     groovy
     application
     id("ci.build.simulator.generateTests")
+    id("ci.build.simulator.jenkins")
 }
 
 application {
