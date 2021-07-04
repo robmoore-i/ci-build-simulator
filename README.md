@@ -13,23 +13,8 @@ that subsequent builds are a bit different.
 
 Correspondingly, there are two Gradle plugins:
 
-- Simulate Development (ci.build.simulator.simulate.development)
 - Jenkins (ci.build.simulator.jenkins)
-
-### Gradle plugin: Simulate Development
-
-Modifies source code for introducing some variety in the build.
-
-For example, running `./gradlew :sleeper:simulateDevelopment` will generate some code in the
-`sleeper` project.
-
-#### Assumptions made by the plugin
-
-- Test sources are written in Groovy, under the default groovy source set, `src/test/groovy`
-- There is a test source package `ci.build.simulator.<project-name>.stable`, which is where the  
-  plugin will generate stable (non-flaky) tests. For example, `ci.build.simulator.sleeper.stable`. The `<project name>` is the name of the subdirectory of this repo, i.e. the value
-  within the include statement in `settings.gradle.kts`.
-- Junit 5 is on the test classpath (i.e. `testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")`)
+- Simulate Development (ci.build.simulator.simulate.development)
 
 ### Gradle plugin: Jenkins
 
@@ -48,6 +33,21 @@ continuously push updates to the provided branch.
 - The created jobs are named after the given project (i.e. `sleeper` in `:sleeper:createJob`) and
   the given branch. If a job already exists for that combination, the job creation will fail with
   a descriptive error message.
+
+### Gradle plugin: Simulate Development
+
+Modifies source code for introducing some variety in the build.
+
+For example, running `./gradlew :sleeper:simulateDevelopment` will generate some code in the
+`sleeper` project.
+
+#### Assumptions made by the plugin
+
+- Test sources are written in Groovy, under the default groovy source set, `src/test/groovy`
+- There is a test source package `ci.build.simulator.<project-name>.stable`, which is where the  
+  plugin will generate stable (non-flaky) tests. For example, `ci.build.simulator.sleeper.stable`. The `<project name>` is the name of the subdirectory of this repo, i.e. the value
+  within the include statement in `settings.gradle.kts`.
+- Junit 5 is on the test classpath (i.e. `testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")`)
 
 ## CodeDay Labs
 
