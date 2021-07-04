@@ -15,14 +15,16 @@ node {
     stage("Run tests") {
         sh("./gradlew :app:test")
     }
-    stage("Extend test suite") {
-        sh("./gradlew :app:extendTestSuite")
-        sh("git add app")
-        sh("git commit -am \"(Jenkins) Extended test suite\"")
-        String gitUrl = sh(returnStdout: true, script: "git config remote.origin.url").trim()
-        String truncatedGitUrl = gitUrl.drop("https://".length())
-        withCredentials([usernameColonPassword(credentialsId: "GitHubPushAccess", variable: "GITHUB_CREDENTIALS")]) {
-            sh("git push https://${GITHUB_CREDENTIALS}@$truncatedGitUrl")
+    if (false) {
+        stage("Extend test suite") {
+            sh("./gradlew :app:extendTestSuite")
+            sh("git add app")
+            sh("git commit -am \"(Jenkins) Extended test suite\"")
+            String gitUrl = sh(returnStdout: true, script: "git config remote.origin.url").trim()
+            String truncatedGitUrl = gitUrl.drop("https://".length())
+            withCredentials([usernameColonPassword(credentialsId: "GitHubPushAccess", variable: "GITHUB_CREDENTIALS")]) {
+                sh("git push https://${GITHUB_CREDENTIALS}@$truncatedGitUrl")
+            }
         }
     }
 }
