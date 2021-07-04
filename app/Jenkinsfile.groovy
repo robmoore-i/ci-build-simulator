@@ -2,10 +2,7 @@ node {
     stage("Setup") {
         sh("ls")
         sh("git --version")
-        sh("git branch")
-        sh("git branch | grep \"*\"")
-        sh("git branch | grep \"*\" | awk '{print \$2}'")
-        String gitBranch = "main"
+        String gitBranch = sh(returnStdout: true, script: "git branch | grep \"^*\" | awk '{print \$2}'").trim()
         sh("git checkout $gitBranch")
         sh("git reset --hard origin/$gitBranch")
         sh("git pull")
@@ -16,6 +13,7 @@ node {
     stage("Run tests") {
         sh("./gradlew :app:test")
     }
+    //noinspection GroovyConstantIfStatement
     if (false) {
         stage("Extend test suite") {
             sh("./gradlew :app:extendTestSuite")
