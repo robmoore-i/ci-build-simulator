@@ -14,5 +14,9 @@ object CreateJobTaskInputValidator {
                         "./gradlew :app:createJob -Pbranch=main -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret"
             )
         }
+
+        if (project.property("branch") == "main") {
+            throw RuntimeException("The branch 'main' is protected. This plugin refuses to create a simulation job for it.")
+        }
     }
 }
