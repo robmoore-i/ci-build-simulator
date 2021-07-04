@@ -20,9 +20,9 @@ Correspondingly, there are two Gradle plugins:
 
 Creates a Jenkins job for a simulation.
 
-For example, running `./gradlew :sleeper:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret` will use the provided user/password credentials to
-log into the Jenkins installation at the provided URL, and create a new simulation which will
-continuously push updates to the provided branch.
+For example, running `./gradlew :sleeper:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret` 
+will use the provided user/password credentials to log into the Jenkins installation at the provided URL, and create a 
+new simulation which will continuously push updates to the provided branch.
 
 #### Assumptions made by the plugin
 
@@ -43,8 +43,8 @@ For example, running `./gradlew :sleeper:simulateDevelopment` will generate some
 
 #### Assumptions made by the plugin
 
-- Test sources are written in Groovy, under the default groovy source set
-  (i.e. `src/test/groovy`)
+- Main and test sources are both written in Groovy, under the default groovy source set
+  (i.e. `src/main/groovy` and `src/test/groovy`)
 - There is a base package `ci.build.simulator.<project-name>` for both the main and test 
   sources, which is where the plugin will generate code. For example, 
   `ci.build.simulator.sleeper`. The `<project name>` is the name of the subdirectory of this 

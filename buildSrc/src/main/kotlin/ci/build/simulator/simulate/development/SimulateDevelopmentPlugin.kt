@@ -5,10 +5,9 @@ import org.gradle.api.Project
 
 class SimulateDevelopmentPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.tasks.register("simulateDevelopment", SimulateDevelopmentTask::class.java) {
+        target.tasks.register("simulateDevelopment", GenerateSleeperTest::class.java) {
             group = "simulate development"
             description = "Modifies the source code to simulate development."
-            testSourcesPath = "src/test/groovy"
             basePackage = "ci.build.simulator.${project.projectDir.name}"
         }
     }
