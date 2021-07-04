@@ -74,8 +74,8 @@ SpringBoot API. I would suggest taking the following steps:
 - Write code in the `springboot` subproject so that the API works, has basic tests and meets the assumptions of the
   above mentioned Gradle plugins.
 - Create a custom implementation of `DevelopmentSimulator` in `buildSrc/src/main/kotlin` under the
-  `ci.build.simulator.simulate.development` package, called `SpringBootDevelopmentSimulator` and implement it however
-  you like.
+  `ci.build.simulator.simulate.development.simulators` package, called `SpringBootDevelopmentSimulator` and implement it
+  however you like.
 
 At this point, you should be able to create your custom simulations on Jenkins.
 

@@ -1,4 +1,4 @@
-import ci.build.simulator.simulate.development.SleeperDevelopmentSimulator
+import ci.build.simulator.simulate.development.simulators.SleeperDevelopmentSimulator
 
 plugins {
     idea

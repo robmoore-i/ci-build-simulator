@@ -1,4 +1,4 @@
-package ci.build.simulator.simulate.development
+package ci.build.simulator.simulate.development.simulators
 
 import org.gradle.api.logging.Logger
 import java.io.File
