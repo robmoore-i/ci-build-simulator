@@ -3,7 +3,6 @@ package ci.build.simulator.simulate.development
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
-import java.io.File
 import java.nio.file.Paths
 
 abstract class SimulateDevelopmentTask : DefaultTask() {
@@ -17,7 +16,8 @@ abstract class SimulateDevelopmentTask : DefaultTask() {
     @get:Input
     abstract var basePackage: String
 
-    abstract fun develop(mainSourcesDir: File, testSourcesDir: File)
+    @get:Input
+    abstract var simulator: DevelopmentSimulator
 
     @TaskAction
     fun develop() {
@@ -33,6 +33,6 @@ abstract class SimulateDevelopmentTask : DefaultTask() {
             throw RuntimeException("Can't find the resolved test sources dir. Tried '${testSourcesDir.absolutePath}'.")
         }
 
-        develop(mainSourcesDir, testSourcesDir)
+        simulator.develop(basePackage, mainSourcesDir, testSourcesDir)
     }
 }

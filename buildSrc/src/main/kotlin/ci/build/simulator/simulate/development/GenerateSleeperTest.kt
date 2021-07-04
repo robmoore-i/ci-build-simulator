@@ -1,10 +1,11 @@
 package ci.build.simulator.simulate.development
 
+import org.gradle.api.logging.Logger
 import java.io.File
 import kotlin.random.Random
 
-abstract class GenerateSleeperTest : SimulateDevelopmentTask() {
-    override fun develop(mainSourcesDir: File, testSourcesDir: File) {
+class GenerateSleeperTest(private val logger: Logger) : DevelopmentSimulator {
+    override fun develop(basePackage: String, mainSourcesDir: File, testSourcesDir: File) {
         logger.quiet("Generating a test in ${testSourcesDir.absolutePath}")
         val currentTestSourceFiles = testSourcesDir.listFiles()?.filterNotNull() ?: emptyList()
         val nextTestNumber = nextTestNumber(currentTestSourceFiles)
