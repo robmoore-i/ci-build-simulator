@@ -8,6 +8,8 @@ node {
         sh("ls")
         sh("git --version")
         sh("git branch")
+        echo("$JOB_NAME")
+        echo("$JOB_NAME".replace('-', '/'))
         String gitBranch = sh(returnStdout: true, script: "git branch | grep \"^*\" | awk '{print \$2}'").trim()
         sh("git checkout $gitBranch")
         sh("git reset --hard origin/$gitBranch")

@@ -43,7 +43,7 @@ object JenkinsJobTemplateSource {
       <extensions/>
     </scm>
     <scriptPath>app/Jenkinsfile.groovy</scriptPath>
-    <lightweight>true</lightweight>
+    <lightweight>false</lightweight>
   </definition>
   <triggers/>
   <disabled>false</disabled>
