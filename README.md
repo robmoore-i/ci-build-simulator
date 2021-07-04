@@ -33,17 +33,17 @@ Running `./gradlew :sleeper:deleteSimulationJob -Pbranch=simulation/1 -Purl=http
 will use the same mechanism to delete the simulation job for this branch.
 
 Simulations are Jenkins jobs with stages defined in the predefined, shared
-[Jenkinsfile](buildSrc/src/main/resources/Jenkinsfile.groovy). In short, these Jenkins jobs will run the build, run the 
+[Jenkinsfile](buildSrc/src/main/resources/Jenkinsfile.groovy). In short, these Jenkins jobs will run the build, run the
 development simulation Gradle task, and finish by triggering another build if needed.
 
 #### Assumptions made by the plugin
 
 - The indicated Jenkins installation needs to have some appropriate plugins in order to run the jobs correctly. Honestly
-  I don't know what the minimal subset is, but it certainly is a subset of those
+  I don't know what the minimal subset is, but it certainly is a subset (but not necessarily a _proper subset_) of those
   seen [here](https://github.com/robmoore-i/JenkinsEC2/blob/main/jenkins_install_plugins.sh#L17).
 - The given branch starts with `simulator/` and contains no underscores (`_`).
 - The created jobs are named after the given project (i.e. `sleeper` in `:sleeper:createSimulationJob`), and the given
-  branch. If a job already exists for that combination, the job creation will fail with a descriptive error message.
+  branch.
 
 ### Gradle plugin: Simulate Development
 
