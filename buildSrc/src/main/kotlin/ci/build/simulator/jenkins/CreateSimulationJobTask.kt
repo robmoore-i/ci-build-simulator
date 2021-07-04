@@ -40,8 +40,8 @@ open class CreateSimulationJobTask : DefaultTask() {
         jenkins: JenkinsServer
     ) {
         val jobXml = JenkinsJobTemplateSource.text(job.branch)
-        logger.quiet("Create Jenkins job named '${job.name}'")
         logger.info("New job XML:\n-----\n$jobXml\n-----")
         jenkins.createJob(job.name, jobXml, true)
+        logger.quiet("Created Jenkins job named '${job.name}'")
     }
 }
