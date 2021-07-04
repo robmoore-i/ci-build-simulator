@@ -10,6 +10,7 @@ open class DeleteSimulationJobTask : DefaultTask() {
         val jenkins = job.getJenkinsServer()
         if (jenkins.jobs.containsKey(job.name)) {
             jenkins.deleteJob(job.name, true)
+            logger.quiet("Deleted jenkins job ${job.name}")
         }
         if (jenkins.jobs.containsKey(job.name)) {
             throw RuntimeException("Deleting job ${job.name} from Jenkins server failed. Aborting.")
