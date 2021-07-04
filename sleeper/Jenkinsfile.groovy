@@ -8,7 +8,9 @@ node {
         sh("ls")
         sh("git --version")
         sh("git branch")
-        String gitBranch = "$JOB_NAME".replace('-', '/')
+        echo("$JOB_NAME")
+        String gitBranch = "$JOB_NAME".split("_")[1].replace('-', '/')
+        echo("gitBranch = $gitBranch")
         sh("git checkout $gitBranch")
         sh("git reset --hard origin/$gitBranch")
         sh("git pull")
@@ -16,11 +18,13 @@ node {
         sh("git config --global user.email \"robmoore121+Jenkins@gmail.com\"")
         sh("git config --global user.name \"Jenkins\"")
     }
+    String projectName = "$JOB_NAME".split("_")[0]
+    echo("projectName = $projectName")
     stage("Run tests") {
-        sh("./gradlew :sleeper:test")
+        sh("./gradlew :$projectName:test")
     }
     stage("Extend test suite") {
-        sh("./gradlew :sleeper:extendTestSuite")
+        sh("./gradlew :$projectName:extendTestSuite")
         sh("git add .")
         sh("git commit -am \"(Jenkins) Extended test suite\"")
         String gitUrl = sh(returnStdout: true, script: "git config remote.origin.url").trim()
