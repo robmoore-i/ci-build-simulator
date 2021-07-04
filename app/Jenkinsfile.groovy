@@ -30,7 +30,7 @@ node {
         }
     }
     def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count HEAD").trim().toInteger()
-    def maxNumberOfCommitsInSimulation = 70
+    def maxNumberOfCommitsInSimulation = 80
     echo("Number of commits so far: $numberOfCommits. Will stop at $maxNumberOfCommitsInSimulation")
     stage("Check simulation") {
         if (numberOfCommits < maxNumberOfCommitsInSimulation) {
