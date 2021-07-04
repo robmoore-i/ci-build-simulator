@@ -1,7 +1,7 @@
 package ci.build.simulator.jenkins
 
 object JenkinsJobTemplateSource {
-    fun text(branch: String, projectName: String): String {
+    fun text(branch: String): String {
         return """
 <?xml version='1.1' encoding='UTF-8'?>
 <flow-definition plugin="workflow-job@2.41">
@@ -43,7 +43,7 @@ object JenkinsJobTemplateSource {
       <submoduleCfg class="list"/>
       <extensions/>
     </scm>
-    <scriptPath>$projectName/Jenkinsfile.groovy</scriptPath>
+    <scriptPath>buildSrc/src/main/resources/Jenkinsfile.groovy</scriptPath>
     <lightweight>false</lightweight>
   </definition>
   <triggers/>
