@@ -4,8 +4,8 @@ node {
         sh("git --version")
         String gitBranch = "main"
         sh("git checkout $gitBranch")
-        sh("git pull")
         sh("git reset --hard origin/$gitBranch")
+        sh("git pull")
         sh("git clean -fd")
         sh("git config --global user.email \"robmoore121+Jenkins@gmail.com\"")
         sh("git config --global user.name \"Jenkins Moore\"")
