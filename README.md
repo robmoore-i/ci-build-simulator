@@ -109,7 +109,7 @@ SpringBoot API. I would suggest taking the following steps:
 
 ## CodeDay Labs
 
-This project exists mainly for use by my CodeDay labs team while they create a tool for
+This project exists mainly for use by my CodeDay labs team to generate test data while they create a tool for
 [Developer Productivity](#developer-productivity) that could be used to view some basic analytics about builds.
 
 ## Developer Productivity
