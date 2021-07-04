@@ -1,7 +1,8 @@
 # ci-build-simulator
 
-This repository contains a [multi-project Gradle build](https://docs.gradle.org/current/userguide/multi_project_builds.html#sec:creating_multi_project_builds) 
-which can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2) with executed jobs and 
+This repository contains
+a [multi-project Gradle build](https://docs.gradle.org/current/userguide/multi_project_builds.html#sec:creating_multi_project_builds)
+which can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2) with executed jobs and
 their corresponding data.
 
 ## Usage
@@ -9,7 +10,7 @@ their corresponding data.
 ### Creating a simulation
 
 A simulation is a self-perpetuating job which continuously creates builds. It would be pretty boring if the builds were
-all the same, so in every run, the build modifies the source code on each run, so that subsequent builds are a bit 
+all the same, so in every run, the build modifies the source code on each run, so that subsequent builds are a bit
 different, in a way that acts as a rudimentary simulation of developers making changes.
 
 Correspondingly, there are two Gradle plugins,
@@ -21,17 +22,19 @@ Correspondingly, there are two Gradle plugins,
 
 ### Gradle plugin: Jenkins
 
-Configures a Gradle task which creates a Jenkins job for a simulation.
+Configures Gradle tasks for managing simulation jobs on Jenkins.
 
-For example, running
-`./gradlew :sleeper:createSimulationJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret`
+Running `./gradlew :sleeper:createSimulationJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret`
 will log into the Jenkins instance running at `http://13.229.56.106:8080` using the username `jenkins` and the password
-`secret`, and create a simulation job for the git branch `simulation/1`. Note that this means the branch `simulation/1`
-needs to be pushed to GitHub, otherwise Jenkins won't be able to see it.
+`secret`, and create a simulation job for the git branch `simulation/1`. It also creates the branch remotely if it
+doesn't already exist.
+
+Running `./gradlew :sleeper:deleteSimulationJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret`
+will use the same mechanism to delete the simulation job for this branch.
 
 Simulations are Jenkins jobs with stages defined in the predefined, shared
-[Jenkinsfile](buildSrc/src/main/resources/Jenkinsfile.groovy). In short, these jobs run the build, run the development
-simulation Gradle task, and finish by triggering another build if needed.
+[Jenkinsfile](buildSrc/src/main/resources/Jenkinsfile.groovy). In short, these Jenkins jobs will run the build, run the 
+development simulation Gradle task, and finish by triggering another build if needed.
 
 #### Assumptions made by the plugin
 
