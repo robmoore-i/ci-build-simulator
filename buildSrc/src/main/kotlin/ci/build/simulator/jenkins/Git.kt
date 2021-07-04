@@ -27,8 +27,8 @@ class Git(private val project: Project) {
         val isLocalWorkingTreeDirty = checkExitCode("git", "diff", "--quiet") != 0
         if (isLocalWorkingTreeDirty) {
             throw RuntimeException(
-                "You have uncommitted local changes. Refusing to push branch for new simulation. " +
-                        "Stash or commit your local changes. Then you can try running this task again."
+                "You have uncommitted local changes. Refusing to continue. " +
+                        "Stash or commit your local changes, and then you can try running this task again."
             )
         }
     }
