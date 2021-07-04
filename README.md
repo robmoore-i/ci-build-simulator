@@ -2,7 +2,7 @@
 
 This project can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2)
 with a load of build data for use by my CodeDay team while they create a tool that a [Developer
-Productivity Team](#Appendix-Developer-Productivity) could use to view some basic analytics about their 
+Productivity Team](#appendix---developer-productivity) could use to view some basic analytics about their 
 build.
 
 ### Appendix - Developer Productivity
