@@ -7,7 +7,7 @@ import java.io.File
 import java.nio.file.Paths
 import kotlin.random.Random
 
-open class GenerateStableTestTask : DefaultTask() {
+open class ExtendTestSuiteTask : DefaultTask() {
 
     @Input
     var testSourcesPath = "src/test/groovy"
@@ -16,7 +16,7 @@ open class GenerateStableTestTask : DefaultTask() {
     var stablePackage = "ci.build.simulator.app.stable"
 
     @TaskAction
-    fun generateTest() {
+    fun extendTestSuite() {
         val dir = Paths.get("${project.projectDir}/$testSourcesPath/${stablePackage.replace('.', '/')}").toFile()
         if (!dir.exists()) {
             throw RuntimeException("Can't find test sources dir. Tried '${dir.absolutePath}'.")

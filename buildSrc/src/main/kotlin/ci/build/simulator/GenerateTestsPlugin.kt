@@ -5,9 +5,9 @@ import org.gradle.api.Project
 
 class GenerateTestsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-        target.tasks.register("generateStableTest", GenerateStableTestTask::class.java) {
+        target.tasks.register("extendTestSuite", ExtendTestSuiteTask::class.java) {
             group = "generateTests"
-            description = "Generates stable (non-flaky) tests."
+            description = "Extends the current test suite by generating more test classes."
             testSourcesPath = "src/test/groovy"
         }
     }
