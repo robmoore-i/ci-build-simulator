@@ -1,6 +1,8 @@
 package ci.build.simulator.jenkins
 
 import org.gradle.api.Project
+import java.io.ByteArrayOutputStream
+import java.nio.charset.Charset
 
 class Git(private val project: Project) {
     fun fetchAll() = checkCall("git", "fetch", "--all")
@@ -31,16 +33,27 @@ class Git(private val project: Project) {
         }
     }
 
-    fun checkCall(vararg args: String) {
+    fun currentBranch() = checkOutput("git", "branch", "--show-current")
+
+    private fun checkCall(vararg args: String) {
         project.exec {
             commandLine(args.toMutableList())
         }.assertNormalExitValue()
     }
 
-    fun checkExitCode(vararg args: String): Int {
+    private fun checkExitCode(vararg args: String): Int {
         return project.exec {
             isIgnoreExitValue = true
             commandLine(args.toMutableList())
         }.exitValue
+    }
+
+    private fun checkOutput(vararg args: String): String {
+        val out = ByteArrayOutputStream()
+        project.exec {
+            standardOutput = out
+            commandLine(args.toMutableList())
+        }.assertNormalExitValue()
+        return out.toString(Charset.defaultCharset()).trim()
     }
 }

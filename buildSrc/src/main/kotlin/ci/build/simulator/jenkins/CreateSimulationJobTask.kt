@@ -25,12 +25,14 @@ open class CreateSimulationJobTask : DefaultTask() {
         }
 
         git.verifyLocalWorkingTreeIsClean()
+        val originalBranch = git.currentBranch()
         if (git.isBranchAlreadyExistingLocally(job.branch)) {
             git.checkoutExistingBranch(job.branch)
         } else {
             git.checkoutNewBranch(job.branch)
         }
         git.up(job.branch)
+        git.checkoutExistingBranch(originalBranch)
     }
 
     private fun createSimulationJenkinsJob(
