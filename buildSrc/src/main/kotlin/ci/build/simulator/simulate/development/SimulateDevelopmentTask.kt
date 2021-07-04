@@ -13,25 +13,26 @@ abstract class SimulateDevelopmentTask : DefaultTask() {
     var testSourcesPath = "src/test/groovy"
 
     @get:Input
-    abstract var stableTestsPackage: String
+    abstract var basePackage: String
 
     @TaskAction
     fun develop() {
-        val dir = Paths.get("${project.projectDir}/$testSourcesPath/${stableTestsPackage.replace('.', '/')}").toFile()
+        val dir = Paths.get("${project.projectDir}/$testSourcesPath/${basePackage.replace('.', '/')}").toFile()
         if (!dir.exists()) {
-            throw RuntimeException("Can't find test sources dir. Tried '${dir.absolutePath}'.")
+            throw RuntimeException("Can't find the resolved test sources dir. Tried '${dir.absolutePath}'.")
         }
-        logger.quiet("Generating a stable test in ${dir.absolutePath}")
+        logger.quiet("Generating a test in ${dir.absolutePath}")
         val currentTestSourceFiles = dir.listFiles()?.filterNotNull() ?: emptyList()
         val nextTestNumber = nextTestNumber(currentTestSourceFiles)
-        val newTest = File(dir, "StableTest$nextTestNumber.groovy")
+        val testClassName = "${generatedClassBaseName}${nextTestNumber}"
+        val newTest = File(dir, "${testClassName}.groovy")
         println("Generating file ${newTest.name}")
         newTest.writeText(
-            """package ci.build.simulator.${project.projectDir.name}.stable
+            """package $basePackage
 
 import org.junit.jupiter.api.Test
 
-class StableTest${nextTestNumber} {
+class $testClassName {
     @Test void t() {
         Thread.sleep(${randomTestDuration()})
         assert 1 == 1
@@ -41,17 +42,24 @@ class StableTest${nextTestNumber} {
         )
     }
 
-    private fun nextTestNumber(currentTestSourceFiles: List<File>): Int {
-        if (currentTestSourceFiles.isEmpty()) {
-            return 1
-        }
-        val currentMaxTestNumber = currentTestSourceFiles.maxOf {
-            it.nameWithoutExtension.drop("StableTest".length).toInt()
-        }
-        return currentMaxTestNumber + 1
-    }
+    companion object {
+        private const val generatedClassBaseName = "DeterministicTest"
 
-    private fun randomTestDuration(): Int {
-        return Random.nextInt(1, 1000)
+        private fun nextTestNumber(currentTestSourceFiles: List<File>): Int {
+            val generatesTestFiles = currentTestSourceFiles.filter {
+                it.nameWithoutExtension.startsWith(generatedClassBaseName)
+            }
+            if (generatesTestFiles.isEmpty()) {
+                return 1
+            }
+            val currentMaxTestNumber = generatesTestFiles.maxOf {
+                it.nameWithoutExtension.drop(generatedClassBaseName.length).toInt()
+            }
+            return currentMaxTestNumber + 1
+        }
+
+        private fun randomTestDuration(): Int {
+            return Random.nextInt(1, 1000)
+        }
     }
 }

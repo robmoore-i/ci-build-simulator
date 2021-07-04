@@ -9,7 +9,7 @@ class SimulateDevelopmentPlugin : Plugin<Project> {
             group = "simulate development"
             description = "Modifies the source code to simulate development."
             testSourcesPath = "src/test/groovy"
-            stableTestsPackage = "ci.build.simulator.${project.projectDir.name}.stable"
+            basePackage = "ci.build.simulator.${project.projectDir.name}"
         }
     }
 }

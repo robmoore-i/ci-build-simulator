@@ -43,11 +43,22 @@ For example, running `./gradlew :sleeper:simulateDevelopment` will generate some
 
 #### Assumptions made by the plugin
 
-- Test sources are written in Groovy, under the default groovy source set, `src/test/groovy`
-- There is a test source package `ci.build.simulator.<project-name>.stable`, which is where the  
-  plugin will generate stable (non-flaky) tests. For example, `ci.build.simulator.sleeper.stable`. The `<project name>` is the name of the subdirectory of this repo, i.e. the value
-  within the include statement in `settings.gradle.kts`.
-- Junit 5 is on the test classpath (i.e. `testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")`)
+- Test sources are written in Groovy, under the default groovy source set
+  (i.e. `src/test/groovy`)
+- There is a base package `ci.build.simulator.<project-name>` for both the main and test 
+  sources, which is where the plugin will generate code. For example, 
+  `ci.build.simulator.sleeper`. The `<project name>` is the name of the subdirectory of this 
+  repo (i.e. the value within the 'include' call in `settings.gradle.kts`).
+- Junit 5 needs to be on the test classpath 
+  (i.e. `testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")`)
+
+## Extending this simulator
+
+There are different kinds of projects, whose builds have different kinds of characteristics
+in terms of test duration, test flakiness, and in other ways too. You may want to generate data
+for different phases of the build, like creating different kinds of artefacts like JARs, 
+executables, containers or something else. To do this, you'll need to be able to extend this 
+simulator to cover whatever custom requirements you might have.
 
 ## CodeDay Labs
 
