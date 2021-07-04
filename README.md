@@ -1,13 +1,63 @@
 # ci-build-simulator
 
 This project can be used to seed a [Jenkins installation](https://github.com/robmoore-i/JenkinsEC2)
-with a load of build data for use by my CodeDay team while they create a tool that a [Developer
-Productivity Team](#appendix---developer-productivity) could use to view some basic analytics about their 
-build.
+with builds. 
 
-### Appendix - Developer Productivity
+## Usage
 
-The most successful software organisations employ dedicated developer productivity teams. Here
+### Creating a simulation
+
+A simulation is a self-perpetuating job which continuously creates builds. It would be pretty
+boring if the builds were all the same, so in every run, the build modifies the source code so
+that subsequent builds are a bit different.
+
+Correspondingly, there are two Gradle plugins:
+
+- Simulate Development (ci.build.simulator.simulate.development)
+- Jenkins (ci.build.simulator.jenkins)
+
+### Gradle plugin: Simulate Development
+
+Modifies source code for introducing some variety in the build.
+
+For example, running `./gradlew :sleeper:simulateDevelopment` will generate some code in the
+`sleeper` project.
+
+#### Assumptions made by the plugin
+
+- Test sources are written in Groovy, under the default groovy source set, `src/test/groovy`
+- There is a test source package `ci.build.simulator.<project-name>.stable`, which is where the  
+  plugin will generate stable (non-flaky) tests. For example, `ci.build.simulator.sleeper.stable`. The `<project name>` is the name of the subdirectory of this repo, i.e. the value
+  within the include statement in `settings.gradle.kts`.
+- Junit 5 is on the test classpath (i.e. `testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")`)
+
+### Gradle plugin: Jenkins
+
+Creates a Jenkins job for a simulation.
+
+For example, running `./gradlew :sleeper:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret` will use the provided user/password credentials to
+log into the Jenkins installation at the provided URL, and create a new simulation which will
+continuously push updates to the provided branch.
+
+#### Assumptions made by the plugin
+
+- The given branch starts with `simulator/` and contains no underscores (`_`).
+- The indicated Jenkins installation needs to have some appropriate plugins in order to run the
+  jobs correctly. Honestly I don't know what the minimal subset is, but it certainly is a subset
+  of those seen [here](https://github.com/robmoore-i/JenkinsEC2/blob/main/jenkins_install_plugins.sh#L17).
+- The created jobs are named after the given project (i.e. `sleeper` in `:sleeper:createJob`) and
+  the given branch. If a job already exists for that combination, the job creation will fail with
+  a descriptive error message.
+
+## CodeDay Labs
+
+This project exists mainly for use by my CodeDay labs team while they create a tool for 
+[Developer Productivity](#developer-productivity) that could be used to view some basic 
+analytics about builds.
+
+## Developer Productivity
+
+Many excellent software organisations employ teams dedicated to developer productivity. Here
 are a few examples:
 
 - [Gradle](https://gradle.com/blog/top-three-reasons-to-launch-a-dedicated-developer-productivity-engineering-team/)
