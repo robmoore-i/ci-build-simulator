@@ -1,10 +1,11 @@
 node {
     stage("Setup") {
         sh("ls")
+        sh("git branch")
         String gitBranch = "main"
         sh("git checkout $gitBranch")
-        sh("git reset --hard origin $gitBranch")
         sh("git pull")
+        sh("git reset --hard origin/$gitBranch")
         sh("git clean -fd")
         sh("git config --global user.email \"robmoore121@gmail.com\"")
         sh("git config --global user.name \"Jenkins Moore\"")
