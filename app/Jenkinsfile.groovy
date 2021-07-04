@@ -2,8 +2,9 @@ node {
     stage("Setup") {
         sh("ls")
         sh("git --version")
-        def tryBranch = sh("git branch | grep \"*\" | awk '{print \$2}'").trim()
-        echo("Branch: $tryBranch")
+        sh("git branch")
+        sh("git branch | grep \"*\"")
+        sh("git branch | grep \"*\" | awk '{print \$2}'")
         String gitBranch = "main"
         sh("git checkout $gitBranch")
         sh("git reset --hard origin/$gitBranch")
