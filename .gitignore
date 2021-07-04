@@ -7,3 +7,6 @@ buildSrc/build
 
 # Ignore Intellij configuration directory
 .idea
+
+# Jenkins properties
+buildSrc/src/main/resources/jenkins.properties

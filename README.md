@@ -24,6 +24,9 @@ Correspondingly, there are two Gradle plugins,
 
 Configures Gradle tasks for managing simulation jobs on Jenkins.
 
+These tasks accept command line arguments as [project properties](https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties) 
+using the `-P` flag.
+
 Running `./gradlew :sleeper:createSimulationJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret`
 will log into the Jenkins instance running at `http://13.229.56.106:8080` using the username `jenkins` and the password
 `secret`, and create a simulation job for the git branch `simulation/1`. It also creates the branch remotely if it
@@ -35,6 +38,18 @@ will use the same mechanism to delete the simulation job for this branch.
 Simulations are Jenkins jobs with stages defined in the predefined, shared
 [Jenkinsfile](buildSrc/src/main/resources/Jenkinsfile.groovy). In short, these Jenkins jobs will run the build, run the
 development simulation Gradle task, and finish by triggering another build if needed.
+
+Putting in the URL, username and password for Jenkins all the time would be a chore, so instead you can put them in the
+file `buildSrc/src/main/resources/jenkins.properties`, which is ignored from version control. For example,
+
+```
+url=http://13.229.56.106:8080
+user=jenkins
+password=secret
+```
+
+If this file is present, the tasks for this Gradle plugin will use them, and you won't have to supply them on the 
+command line.
 
 #### Assumptions made by the plugin
 
