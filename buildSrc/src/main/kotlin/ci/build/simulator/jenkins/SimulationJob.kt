@@ -4,15 +4,20 @@ import com.offbytwo.jenkins.JenkinsServer
 import org.gradle.api.Project
 import java.net.URI
 
-data class CreateSimulationJobTaskInputs(
-    val jobName: String,
+/**
+ * @param name The name of the job in Jenkins
+ * @param branch The branch corresponding to this simulation job
+ * @param url The Jenkins URL of the Jenkins installation where this job is
+ * @param credentials Credentials that allow for modifying this job
+ */
+data class SimulationJob(
+    val name: String,
     val branch: String,
     val url: String,
-    val user: String,
-    val password: String
+    val credentials: JenkinsCredentials
 ) {
     companion object {
-        fun usingPropertiesFromProject(project: Project): CreateSimulationJobTaskInputs {
+        fun usingPropertiesFromProject(project: Project): SimulationJob {
             if (!(project.hasProperty("branch") &&
                         project.hasProperty("url") &&
                         project.hasProperty("user") &&
@@ -45,15 +50,17 @@ data class CreateSimulationJobTaskInputs(
             }
 
             val jobName = "${project.projectDir.name}_${branch.replace('/', '-')}"
-            return CreateSimulationJobTaskInputs(
+            return SimulationJob(
                 jobName,
                 branch,
                 project.property("url") as String,
-                project.property("user") as String,
-                project.property("password") as String
+                JenkinsCredentials(
+                    project.property("user") as String,
+                    project.property("password") as String
+                )
             )
         }
     }
 
-    fun getJenkinsServer(): JenkinsServer = JenkinsServer(URI(url), user, password)
+    fun getJenkinsServer(): JenkinsServer = JenkinsServer(URI(url), credentials.user, credentials.password)
 }
