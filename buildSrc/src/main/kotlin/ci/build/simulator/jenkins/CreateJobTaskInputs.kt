@@ -14,12 +14,13 @@ data class CreateJobTaskInputs(val branch: String, val url: String, val user: St
             ) {
                 throw RuntimeException(
                     "Missing project properties. Example usage:\n" +
-                            "./gradlew :app:createJob -Pbranch=main -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret"
+                            "./gradlew :app:createJob -Pbranch=simulation/1 -Purl=http://13.229.56.106:8080 -Puser=jenkins -Ppassword=secret"
                 )
             }
 
-            if (project.property("branch") == "main") {
-                throw RuntimeException("The branch 'main' is protected. This plugin refuses to create a simulation job for it.")
+            if (!(project.property("branch") as String).startsWith("simulation/")) {
+                throw RuntimeException("Use a branch name that starts with 'simulation/'.\n" +
+                        "For example, 'simulation/test' or 'simulation/8'")
             }
 
             return CreateJobTaskInputs(
