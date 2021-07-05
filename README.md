@@ -111,6 +111,8 @@ simulator {
 
 ## Extending this simulator
 
+### Different kinds of project
+
 There are different kinds of projects, whose builds have different kinds of characteristics in terms of test duration,
 test flakiness, and in other ways too. You may want to generate data for different phases of the build, like creating
 different kinds of artefacts like JARs, executables, containers or something else. To do this, you'll need to be able to
@@ -129,6 +131,18 @@ SpringBoot API. I would suggest taking the following steps:
   `SpringBootDevelopmentSimulator` for generating code. Presumably this implementation generates some code that is
   specific to SpringBoot.
 - You should then be able to create your custom simulations on Jenkins.
+
+### Different CI tools
+
+Jenkins is just one CI provider. It's a very popular one, especially at companies with poor developer productivity in
+my experience. There are many others that you might want to run tests on though. In that case, I would suggest taking
+the following steps:
+
+- Add a new Gradle plugin in buildSrc under the package `ci.build.simulator.<ci provider name>`.
+- Implement it to have the create and delete tasks for simulations, like the Jenkins Gradle plugin.
+- Make sure the simulations created by the plugin work.
+- Apply the plugin wherever you want.
+- You should then be able to create your simulations on the new CI provider.
 
 ## Developer Productivity
 
