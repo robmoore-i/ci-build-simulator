@@ -11,6 +11,20 @@ This project exists mainly for use by my [CodeDay labs](https://labs.codeday.org
 create a tool for [Developer Productivity](#developer-productivity) that could be used to view some basic analytics 
 about builds.
 
+## Tools and Technologies
+
+The main technologies that program makes use of are Gradle, Kotlin, Groovy, Git, and Jenkins, and the conventions are
+based on empathy and object-oriented thinking.
+
+Please read these: 
+
+- [Gradle - Key Concepts](https://docs.gradle.org/current/userguide/tutorial_using_tasks.html)
+- [Gradle - Plugins](https://docs.gradle.org/current/userguide/plugins.html)
+- [Design - Thinking with objects](http://c2.com/doc/oopsla89/paper.html)
+- [Design - Developer Empathy](https://100daysdx.com/3/)
+
+For Groovy, Kotlin, Git and Jenkins, Google is your friend.
+
 ## Usage
 
 ### Creating a simulation
@@ -19,12 +33,15 @@ A simulation is a self-perpetuating job which continuously creates builds. It wo
 all the same, so in every run, the build modifies the source code on each run, so that subsequent builds are a bit
 different, in a way that acts as a rudimentary simulation of developers making changes.
 
-Correspondingly, there are two Gradle plugins,
+Correspondingly, there are two [Gradle plugins](https://docs.gradle.org/current/userguide/plugins.html),
 
 - Jenkins
   [ci.build.simulator.jenkins](buildSrc/src/main/kotlin/ci/build/simulator/jenkins)
 - Simulate Development
   [ci.build.simulator.simulate.development](buildSrc/src/main/kotlin/ci/build/simulator/simulate/development)
+  
+These two Gradle plugins configure some [Gradle tasks](https://docs.gradle.org/current/userguide/more_about_tasks.html) 
+used for executing CI build simulations.
 
 ### Gradle plugin: Jenkins
 
