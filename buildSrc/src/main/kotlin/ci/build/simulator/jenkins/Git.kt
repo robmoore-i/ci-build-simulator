@@ -2,6 +2,7 @@ package ci.build.simulator.jenkins
 
 import org.gradle.api.Project
 import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 import java.nio.charset.Charset
 
 class Git(private val project: Project) {
@@ -54,6 +55,6 @@ class Git(private val project: Project) {
             standardOutput = out
             commandLine(args.toMutableList())
         }.assertNormalExitValue()
-        return out.toString(Charset.defaultCharset()).trim()
+        return out.toString(Charset.defaultCharset().name()).trim()
     }
 }
