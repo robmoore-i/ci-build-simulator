@@ -108,6 +108,8 @@ simulator {
   plugin will generate code. For example,
   `ci.build.simulator.sleeper`. The `<project name>` is the name of the subdirectory of this repo (i.e. the value within
   the 'include' call in `settings.gradle.kts`).
+- The Jenkins instance has a [username/password credential](https://www.jenkins.io/doc/book/using/using-credentials/) 
+  configured, called `GitHubPushAccess`, which holds valid credentials for pushing to this repository's Git remote.
 
 ## Extending this simulator
 
