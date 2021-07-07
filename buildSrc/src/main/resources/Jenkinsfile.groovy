@@ -1,3 +1,7 @@
+String getBranch() {
+    return "$JOB_NAME".split("_")[1].replace('-', '/')
+}
+
 node {
     stage("Setup") {
         boolean alreadyCheckedOut = sh(returnStatus: true, script: "ls .git") == 0
@@ -12,7 +16,7 @@ node {
         sh("javac -version")
         sh("git branch")
         echo("$JOB_NAME")
-        String branch = "$JOB_NAME".split("_")[1].replace('-', '/')
+        String branch = getBranch()
         echo("branch = $branch")
         sh("git checkout $branch")
         sh("git reset --hard origin/$branch")
@@ -36,7 +40,7 @@ node {
             sh("git push https://${GITHUB_CREDENTIALS}@$truncatedGitUrl")
         }
     }
-    String branch = "$JOB_NAME".split("_")[1].replace('-', '/')
+    String branch = getBranch()
     def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count $branch ^origin/main").trim().toInteger()
     def maxNumberOfCommitsInSimulation = 4
     echo("Number of commits in this simulation so far: $numberOfCommits. Will stop at $maxNumberOfCommitsInSimulation")
