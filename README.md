@@ -60,7 +60,8 @@ will use the same mechanism to delete the simulation job for this branch.
 
 Simulations are Jenkins jobs with stages defined in the predefined, shared
 [Jenkinsfile](buildSrc/src/main/resources/Jenkinsfile.groovy). In short, these Jenkins jobs will run the build, run the
-development simulation Gradle task, and finish by triggering another build if needed.
+development simulation Gradle task, and finish by triggering another build if needed. By default, simulations create 5
+builds. You can change this by editing the Jenkinsfile on the simulation branch.
 
 Putting in the URL, username and password for Jenkins all the time would be a chore, so instead you can put them in the
 file `buildSrc/src/main/resources/jenkins.properties`, which is ignored from version control. For example,
