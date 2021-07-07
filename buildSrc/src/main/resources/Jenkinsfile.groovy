@@ -37,7 +37,7 @@ node {
         }
     }
     String branch = "$JOB_NAME".split("_")[1].replace('-', '/')
-    def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count $branch ^main").trim().toInteger()
+    def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count $branch ^origin/main").trim().toInteger()
     def maxNumberOfCommitsInSimulation = 4
     echo("Number of commits in this simulation so far: $numberOfCommits. Will stop at $maxNumberOfCommitsInSimulation")
     stage("Check simulation") {
