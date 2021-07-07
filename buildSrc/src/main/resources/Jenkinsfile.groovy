@@ -12,10 +12,10 @@ node {
         sh("javac -version")
         sh("git branch")
         echo("$JOB_NAME")
-        String gitBranch = "$JOB_NAME".split("_")[1].replace('-', '/')
-        echo("gitBranch = $gitBranch")
-        sh("git checkout $gitBranch")
-        sh("git reset --hard origin/$gitBranch")
+        String branch = "$JOB_NAME".split("_")[1].replace('-', '/')
+        echo("branch = $branch")
+        sh("git checkout $branch")
+        sh("git reset --hard origin/$branch")
         sh("git pull")
         sh("git clean -fd")
         sh("git config --global user.email \"robmoore121+jenkins@gmail.com\"")
@@ -36,9 +36,10 @@ node {
             sh("git push https://${GITHUB_CREDENTIALS}@$truncatedGitUrl")
         }
     }
-    def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count HEAD").trim().toInteger()
-    def maxNumberOfCommitsInSimulation = 80
-    echo("Number of commits so far: $numberOfCommits. Will stop at $maxNumberOfCommitsInSimulation")
+    String branch = "$JOB_NAME".split("_")[1].replace('-', '/')
+    def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count $branch ^main").trim().toInteger()
+    def maxNumberOfCommitsInSimulation = 4
+    echo("Number of commits in this simulation so far: $numberOfCommits. Will stop at $maxNumberOfCommitsInSimulation")
     stage("Check simulation") {
         if (numberOfCommits < maxNumberOfCommitsInSimulation) {
             build job: "$JOB_NAME", wait: false
