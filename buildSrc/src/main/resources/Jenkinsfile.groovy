@@ -42,7 +42,7 @@ node {
     }
     String branch = getBranch()
     def numberOfCommits = sh(returnStdout: true, script: "git rev-list --count $branch ^origin/main").trim().toInteger()
-    def maxNumberOfCommitsInSimulation = 4
+    def maxNumberOfCommitsInSimulation = 5
     echo("Number of commits in this simulation so far: $numberOfCommits. Will stop at $maxNumberOfCommitsInSimulation")
     stage("Check simulation") {
         if (numberOfCommits < maxNumberOfCommitsInSimulation) {
