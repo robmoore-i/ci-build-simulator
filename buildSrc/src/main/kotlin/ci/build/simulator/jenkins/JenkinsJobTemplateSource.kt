@@ -1,6 +1,9 @@
 package ci.build.simulator.jenkins
 
 object JenkinsJobTemplateSource {
+    private const val repoUrl = "https://github.com/robmoore-i/ci-build-simulator"
+    private const val jenkinsfilePath = "buildSrc/src/main/resources/Jenkinsfile.groovy"
+
     fun text(branch: String): String {
         return """
 <?xml version='1.1' encoding='UTF-8'?>
@@ -31,7 +34,7 @@ object JenkinsJobTemplateSource {
       <configVersion>2</configVersion>
       <userRemoteConfigs>
         <hudson.plugins.git.UserRemoteConfig>
-          <url>https://github.com/robmoore-i/ci-build-simulator</url>
+          <url>$repoUrl</url>
         </hudson.plugins.git.UserRemoteConfig>
       </userRemoteConfigs>
       <branches>
@@ -43,7 +46,7 @@ object JenkinsJobTemplateSource {
       <submoduleCfg class="list"/>
       <extensions/>
     </scm>
-    <scriptPath>buildSrc/src/main/resources/Jenkinsfile.groovy</scriptPath>
+    <scriptPath>$jenkinsfilePath</scriptPath>
     <lightweight>false</lightweight>
   </definition>
   <triggers/>
