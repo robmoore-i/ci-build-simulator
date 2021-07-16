@@ -27,6 +27,31 @@ For Groovy, Kotlin, Git and Jenkins, Google is your friend.
 
 ## Usage
 
+### Environment setup
+
+#### Using Docker
+
+To normalize environments, you can run all the below commands from within a Docker container. To do this, first install
+and run Docker Desktop from [Docker's website](https://www.docker.com/products/docker-desktop). This is via a `.dmg`
+file and is pretty easy.
+
+If you use Docker, the required Java 11 is included by default. You shouldn't have to install anything besides Docker.
+
+To use it, do this:
+
+1. Build the [Docker image](https://jfrog.com/knowledge-base/a-beginners-guide-to-understanding-and-building-docker-images/)
+   with `./docker/build-workspace.sh`.
+2. Open the workspace with `./docker/open-workspace.sh`. You will enter the shell of a Docker container, in which you
+   can run any of the below-mentioned Gradle tasks. For example, you could try running `./gradlew :sleeper:test`. 
+
+This works by using a [bind mount](https://docs.docker.com/storage/bind-mounts/) into the repository's root directory.
+It basically means that you are really in the same directory, but you're running in an environment which has the exact
+right tools installed - how convenient!
+
+#### Without Docker
+
+You'll need to install Java 11, and make sure your `$JAVA_HOME` variable is set to it correctly.
+
 ### Creating a simulation
 
 A simulation is a self-perpetuating job which continuously creates builds. It would be pretty boring if the builds were
