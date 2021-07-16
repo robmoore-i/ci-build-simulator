@@ -8,6 +8,12 @@ plugins {
     id("ci.build.simulator.jenkins")
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(11))
+    }
+}
+
 application {
     mainClass.set("ci.build.simulator.sleeper.App")
 }
