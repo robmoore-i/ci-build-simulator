@@ -29,15 +29,20 @@ For Groovy, Kotlin, Git and Jenkins, Google is your friend.
 
 ### Environment setup
 
-#### Using Docker
+#### Default
 
-To normalize environments, you can run all the below commands from within a Docker container. To do this, first install
-and run Docker Desktop from [Docker's website](https://www.docker.com/products/docker-desktop). This is via a `.dmg`
-file and is pretty easy.
+Install Java 11, and make sure your `$JAVA_HOME` variable is set to it correctly. If this setup doesn't work, or your
+machine setup is particularly special/unique, try using the Docker method, as described below.
 
-If you use Docker, the required Java 11 is included by default. You shouldn't have to install anything besides Docker.
+#### Docker
 
-To use it, do this:
+To normalize environments so that all dependencies are included automatically without you needing to install anything
+(other than Docker), you can use Docker to run all the below commands from within a container. Install Docker Desktop
+from [Docker's website](https://www.docker.com/products/docker-desktop). This is via a `.dmg` file and is pretty easy.
+
+This option only makes sense if you're using [SSH authentication for Git](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/about-ssh).
+
+Here are the instructions for using this repository via Docker:
 
 1. Build the [Docker image](https://jfrog.com/knowledge-base/a-beginners-guide-to-understanding-and-building-docker-images/)
    with `./docker/build-workspace.sh`.
@@ -45,12 +50,8 @@ To use it, do this:
    can run any of the below-mentioned Gradle tasks. For example, you could try running `./gradlew :sleeper:test`. 
 
 This works by using a [bind mount](https://docs.docker.com/storage/bind-mounts/) into the repository's root directory.
-It basically means that you are really in the same directory, but you're running in an environment which has the exact
-right tools installed - how convenient!
-
-#### Without Docker
-
-You'll need to install Java 11, and make sure your `$JAVA_HOME` variable is set to it correctly.
+It basically means that you are really in the same directory, but you're running in an environment which has predefined
+dependencies and tools installed already.
 
 ### Creating a simulation
 
