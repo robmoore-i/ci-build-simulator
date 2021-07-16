@@ -1,5 +1,14 @@
 String getBranch() {
-    return "$JOB_NAME".split("_")[1].replace('-', '/')
+    try {
+        return "$JOB_NAME".split("_")[1].replace('-', '/')
+    } catch (Exception e) {
+        echo("=====\nAn exception was thrown while parsing the job name '$JOB_NAME'. " +
+                "It is expected to conform to the format \"<subproject name>_<branch name, with '/' replaced by '-'>\"." +
+                "Given that the pipeline is unable to extract information that it needs in order to proceed, the " +
+                "build will now rethrow the exception which caused this, which will result in the build failing " +
+                "and exiting.\n=====")
+        throw e
+    }
 }
 
 node {
@@ -11,7 +20,7 @@ node {
         sh("pwd")
         sh("ls")
         sh("git --version")
-        sh("echo $JAVA_HOME")
+        sh("echo ${env.JAVA_HOME}")
         sh("java -version")
         sh("javac -version")
         sh("git branch")
