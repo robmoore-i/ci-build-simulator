@@ -1,3 +1,6 @@
 FROM openjdk:11
+COPY . /ci-build-simulator
 WORKDIR /ci-build-simulator
-CMD "apt update && apt install git"
+RUN apt update \
+    && apt install git \
+    && ./gradlew :sleeper:test
